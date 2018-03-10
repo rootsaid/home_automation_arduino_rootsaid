@@ -1,3 +1,11 @@
+   //SIMPLE AND CHEAP HOME AUTOMATION SYSTEM USING NODEMCU AND ARDUINO BY ROOTSAID
+   //Simple Arduino Code for building a home automation system that can control electrical appliances 
+   //such as lights, fans, gates etc suing our mobile phone from anywhere around the world. 
+   //All you need is a Node MCU board, some relays and an android phone. 
+   //Credits - Krishna S
+   //Complete Project Tutorial on - : http://rootsaid.com/arduino-home-automation/
+
+
     #include <ESP8266WiFi.h>
     #include <WiFiUdp.h>
 
