@@ -13,7 +13,7 @@
     const char* password = "testpassword";
 
     WiFiUDP Udp;
-    unsigned int port = 5514;
+    unsigned int port = 5005;
     char packet[255];
 
     void setup()
