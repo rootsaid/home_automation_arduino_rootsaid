@@ -1,0 +1,104 @@
+#include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
+
+const char* ssid = "Green Terminal";
+const char* password = "Iamferitanin0!";
+
+WiFiUDP Udp;
+unsigned int port = 5005;
+char packet[255];
+
+void setup()
+    {
+    Serial.begin(115200);
+    Serial.println();
+    
+    pinMode(D0, OUTPUT);
+    pinMode(D5, OUTPUT);
+    pinMode(D6, OUTPUT);
+    pinMode(D7, OUTPUT);
+
+    Serial.printf("Connecting to %s ", ssid);
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+    delay(500);
+    Serial.print(".");
+    }
+    Serial.println("Connection Successful");
+    Udp.begin(port);
+    Serial.printf("Listener started at IP %s, at port %d \n", WiFi.localIP().toString().c_str(), port);
+    }
+
+    void loop()
+    {
+    int packetSize = Udp.parsePacket();
+    if (packetSize)
+    {
+    Serial.printf("Received %d bytes from %s, port %d\n", packetSize, Udp.remoteIP().toString().c_str(), Udp.remotePort());
+    int len = Udp.read(packet, 255);
+    if (len > 0)
+    {
+    packet[len] = 0;
+    }
+    Serial.printf("UDP packet contents: %s\n", packet);
+    if(strcmp(packet, "device1on") == 0)
+    {
+       digitalWrite(D0, HIGH); 
+       Serial.printf("Device 1 On");
+
+    }
+    else if(strcmp(packet, "device1off") == 0)
+    {
+       digitalWrite(D0, LOW); 
+       Serial.printf("Device 1 Off");
+       Serial.println("");
+    }
+   else if(strcmp(packet, "device2on") == 0)
+    {
+       digitalWrite(D5, HIGH); 
+       Serial.printf("Device 2 On");
+       Serial.println("");
+
+    }
+   else if(strcmp(packet, "device2off") == 0)
+    {
+       digitalWrite(D5, LOW); 
+       Serial.printf("Device 2 Off");
+       Serial.println("");
+
+    }
+   else if(strcmp(packet, "device3on") == 0)
+    {
+       digitalWrite(D6, HIGH); 
+       Serial.printf("Device 3 On");
+       Serial.println("");
+
+    }
+   else if(strcmp(packet, "device3off") == 0)
+    {
+       digitalWrite(D6, LOW); 
+       Serial.printf("Device 3 Off");
+       Serial.println("");
+
+    }
+    else if(strcmp(packet, "device4on") == 0)
+    {
+       digitalWrite(D7, HIGH); 
+       Serial.printf("Device 4 On");
+       Serial.println("");
+
+    }
+    else if(strcmp(packet, "device4off") == 0)
+    {
+       digitalWrite(D7, LOW); 
+       Serial.printf("Device 4 Off");
+       Serial.println("");
+
+    }
+    else
+    {
+     Serial.printf("Invalid"); 
+    }
+    }
+    }
